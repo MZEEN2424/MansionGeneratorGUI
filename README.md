@@ -1,4 +1,2 @@
-# MansionGenerator
-Simulate the generation of Mansions in Minecraft
-
-Thanks for help: De6ris, zfq1041
+# MansionGeneratorGUI
+https://github.com/Xinyuuu7/MansionGenerator GUI Version
