@@ -1,0 +1,81 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'maven-publish'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
+    id 'edu.sc.seis.launch4j' version '2.5.0'
+}
+
+archivesBaseName = 'Xinyuiii'
+group = 'Xinyu'
+version '1.0-SNAPSHOT'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url "https://maven.seedfinding.com"
+    }
+    maven {
+        url "https://maven.latticg.com/"
+    }
+    maven {
+        url "https://jitpack.io"
+    }
+}
+
+application {
+    mainClass = "Xinyuiii.MansionGenerator.properties.Main"
+}
+
+dependencies {
+    implementation('com.seedfinding:mc_feature:1.171.7')
+    implementation('com.seedfinding:mc_math:1.171.0')
+    implementation('com.seedfinding:mc_noise:1.171.1')
+    implementation('com.seedfinding:mc_reversal:1.171.1')
+    implementation('com.seedfinding:mc_terrain:1.171.1')
+    implementation('com.seedfinding:mc_seed:1.171.2')
+    implementation('com.seedfinding:mc_core:1.200.0')
+    implementation('com.seedfinding:mc_biome:1.171.1')
+    implementation('com.seedfinding:latticg:1.06@jar')
+    
+    // Commented out problematic dependencies
+    // implementation('com.github.jellejurre:seed-checker:1.0.0-1.16.1') {
+    //     transitive = false
+    // }
+    // implementation('com.github.profotoce59:VillageGenerator:main-SNAPSHOT') {
+    //     transitive = false
+    // }
+}
+
+test {
+    useJUnitPlatform()
+}
+
+shadowJar {
+    manifest {
+        attributes 'Main-Class': 'Xinyuiii.MansionGenerator.properties.Main'
+    }
+    archiveFileName = 'Xinyuiii.jar'
+    destinationDirectory = file('build/libs')
+    minimize()
+}
+
+launch4j {
+    mainClassName = 'Xinyuiii.MansionGenerator.properties.Main'
+    headerType = 'gui'
+    outfile = 'Xinyuiii.exe'
+    jar = 'build/libs/Xinyuiii.jar'
+    version = '1.0.0'
+    textVersion = '1.0.0'
+    copyright = '2024 XinYuQiii'
+    companyName = 'XinYuQiii'
+    productName = 'Xinyuiii'
+}
+
+build.dependsOn shadowJar
+build.dependsOn createExe
